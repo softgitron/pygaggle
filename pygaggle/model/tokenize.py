@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import List, Mapping, Union, Iterable, Optional, Tuple
 
+from spacy.tokenizer import Tokenizer
 from spacy.lang.en import English
 from transformers import PreTrainedTokenizer
 import torch
@@ -163,7 +164,7 @@ class SimpleBatchTokenizer(BatchTokenizer):
 
 class SpacyWordTokenizer:
     nlp = English()
-    tokenizer = nlp.tokenizer
+    tokenizer = Tokenizer(nlp.vocab)
 
     @lru_cache(maxsize=1024)
     def __call__(self, text: str) -> List[str]:
